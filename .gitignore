@@ -1,0 +1,10 @@
+#Python
+*.pyc
+
+#IDE
+*.idea
+*.vscode
+
+#Development
+*.txt
+data/*
