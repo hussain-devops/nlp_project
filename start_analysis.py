@@ -2,11 +2,12 @@
 
 from src.aws import * 
 from src import *
-from src import helpInfo
+from src import helpInfo,utility
 
 menu = Menu()
 mybucket = S3Bucket()
 #mybucket.getBuckets()
+
 print("\t*****Welcome To NLP based Curation Framework*****\n")
 
 # List the Menu 
@@ -14,7 +15,7 @@ menu.showMenu()
 input1 = menu.getInput()
 
 if input1 =='q':
-    print 'Exit From Frame Work'
+    utility.printError('Exit From Frame Work')
     exit()
 elif input1 == '1':
     print ('Entered Input '+ input1)

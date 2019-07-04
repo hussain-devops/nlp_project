@@ -1,18 +1,19 @@
 import os,subprocess,re,nltk
 from textwrap import wrap
 from gensim.summarization import summarize
-from src.vars import global_vars as vars
+# from src.vars import global_vars as vars
 from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
 from pdfminer.converter import TextConverter
 from pdfminer.layout import LAParams
 from pdfminer.pdfpage import PDFPage
 from io import BytesIO
+from src import utility
 
 # hichri
 # iPSC_OCRL_MolAut
 # splicing_analysis_genes-09-00015
 
-inputpath = '/home/hussain/ML/project/nlp_project/data/raw/iPSC_OCRL_MolAut.pdf'
+path = '/home/hussain/ML/project/nlp_project/data/raw/iPSC_OCRL_MolAut.pdf'
 outputpath = '/home/hussain/ML/project/nlp_project/data/result.txt'
 
 def pdf_to_text(path):
@@ -33,10 +34,9 @@ def pdf_to_text(path):
     retstr.close()
     return text
 
-
 def patternCheck(text,data):
     if text == 'abstract':
-        text = r"^A([b|B|\s][s|S|\s][t|T|\s][r|R|\s][a|A|\s][c|C|\s][t|T|\s])"
+        text = r"^A([b|B][s|S][t|T][r|R][a|A][c|C][t|T])"
     if text == 'results':
         text = r"^R([e|E|\s][s|S|\s][u|U|\s][l|L|\s][t|T|\s][s|S|\s])"
     if text == 'conclusions':
@@ -65,13 +65,42 @@ def cutPara(data,feature):
         index = index + 1
     fo.close()
     os.remove("test.txt")
-
     return para
 
 
-data = pdf_to_text(inputpath)
-# print data
-para = cutPara(data,'conclusions').replace('\n',' ')
 
-print para
-# print summarize(para)
+def getPartialData(path,keyinput):
+    data = pdf_to_text(path)
+    partialData = cutPara(data,keyinput).replace('\n',' ')
+    summarizeData = summarize(partialData)
+    return summarizeData
+
+def getAllFiles(path,keyinput):
+    fileObj = open("partial1.txt", "wb")
+    fileList = []
+    for filename in os.listdir(path):
+        filepath = ''
+        if filename.endswith(".pdf"):
+            filepath = path + filename
+            partialData = getPartialData(filepath,keyinput)
+            if partialData == '':
+                fileList.append(filename)
+                continue
+            fileObj.write(filename+"\n")
+            fileObj.write(partialData)
+            fileObj.write("\n\n")
+    print "FIle LIST " + str(fileList)
+
+def printMessage(msg):
+    print "############# " + msg + " ############"
+
+def perfomPartAnalysis(path,keyinput):
+    printMessage('Performing Partial Analysis : '+keyinput)
+    path = '/home/hussain/ML/project/nlp_project/data/raw/'
+    getAllFiles(path,keyinput)
+
+
+
+
+# path = '/home/hussain/ML/project/nlp_project/data/raw/'
+# getAllFiles(path,'abstract')

@@ -1,6 +1,7 @@
 from src import FileInfo as FileInfo
 from src.vars import global_vars as vars
 from src.nlp import pdf_data as pdata
+from src import utility
 
 input_count = '3'
 
@@ -17,14 +18,20 @@ class Menu():
     def getInput(self): 
         choice = raw_input('Enter your Choice: ')
         return choice
+    
+    def getUserInput(self,attribute):
+        print("Enter Your "+attribute+" : ")
+    
+    def getUserDetail(self):
+        self.getUserInput(self,name)
 
     def ShowFullAnalysis(self):
-        print ('\n')
-        print ('\t ====================================================')
-        print ('\t ***** Performing Full Analysis on the Raw Data *****')
-        print ('\t Total Number of Files    :' + self.input_count)
-        print ('\t Estimated Time Duration  :')
-        print ('\t ========================================')
+        # print ('\n')
+        print ('===========================================================')
+        print('\t ***** Performing Full Analysis on the Raw Data *****')
+        utility.printLog (' Total Number of Files    :' + self.input_count)
+        utility.printLog (' Estimated Time Duration  :')
+        # print ('\t ========================================')
 
     def ShowPartialAnalysis(self):
         print ('\n')
