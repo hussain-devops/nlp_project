@@ -14,22 +14,20 @@ class PartialAnalysis():
         return self.input2
 
     def validateInput(self,input2):
-        path = vars.raw_folder + 'iPSC_OCRL_MolAut.pdf' # needs to be modified
+        path = vars.raw_folder + 'iPSC_OCRL_MolAut.pdf' # needs to be modified by taking out the pdf file
         if self.input2 == 'q':
             utility.printError('Exit From Frame Work')
             exit()
         elif self.input2 == '1': 
             # print ('Entered Input '+ self.input2)
             utility.printLog(self.input2)
-            PartAnalysis.perfomPartAnalysis(path,'abstract')
+            PartAnalysis.perfomPartAnalysis(vars.raw_folder,'abstract')
         elif self.input2 == '2':
-            # print ('Entered Input '+ self.input2)
-            PartAnalysis.perfomPartAnalysis(path,'conclusions')
+            PartAnalysis.perfomPartAnalysis(vars.raw_folder,'methods')
         elif self.input2 == '3':
-            # print ('Entered Input '+ self.input2)
-            PartAnalysis.perfomPartAnalysis(path,'results')
+            PartAnalysis.perfomPartAnalysis(vars.raw_folder,'conclusions')
         elif self.input2 == '4':
-            print ('Entered Input '+ self.input2)
+            PartAnalysis.perfomPartAnalysis(vars.raw_folder,'results')
         elif self.input2 == 'h':
             print ('Entered Input '+ self.input2)
             print helpInfo.help2

@@ -18,12 +18,6 @@ class Menu():
     def getInput(self): 
         choice = raw_input('Enter your Choice: ')
         return choice
-    
-    def getUserInput(self,attribute):
-        print("Enter Your "+attribute+" : ")
-    
-    def getUserDetail(self):
-        self.getUserInput(self,name)
 
     def ShowFullAnalysis(self):
         # print ('\n')
@@ -38,8 +32,8 @@ class Menu():
         print ('\t ====================================================')
         print ('\t ***** Performing Partial Analysis on the Raw Data *****')
         print ('\t 1. Abstraction\n')
-        print ('\t 2. Conclusion\n')
-        print ('\t 3. Results\n')
-        print ('\t 4. Search\n')
+        print ('\t 2. Methods\n')
+        print ('\t 3. Conclusions\n')
+        print ('\t 4. Results\n')
         print ("\tPress 'h' for help and 'q' to quit")
         print ('\t ========================================')

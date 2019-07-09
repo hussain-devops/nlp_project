@@ -7,4 +7,4 @@
 
 #Development
 *.txt
-data/*
+data/processed/*

@@ -1,5 +1,5 @@
 #!/usr/bin/python
-
+import os
 from src.aws import * 
 from src import *
 from src import helpInfo,utility
@@ -7,7 +7,7 @@ from src import helpInfo,utility
 menu = Menu()
 mybucket = S3Bucket()
 #mybucket.getBuckets()
-
+os.system('clear')
 print("\t*****Welcome To NLP based Curation Framework*****\n")
 
 # List the Menu 
