@@ -37,15 +37,16 @@ def pdf_textract(filepath):
 def patternCheck(keytext,data):
     if keytext == 'abstract':
         keytext = r"^A([b|B][s|S][t|T][r|R][a|A][c|C][t|T])"
-    # if keytext == 'BACKGROUND':
-    #     keytext = "BACKGROUND"
+
     if keytext == 'results':
         keytext = r"^R([e|E|\s][s|S|\s][u|U|\s][l|L|\s][t|T|\s][s|S|\s])"
-        # keytext = r"([Results | \d\.\sResults | RESULTS])"
+
     if keytext == 'conclusions':
         keytext = r"^C([o|O][n|N|\s][c|C|\s][l|L|\s][u|U|\s][s|S|\s][i|I|\s][o|O|\s][n|N|\s][s|S|\s])"
+
     if keytext == 'methods':
-        keytext = r"^M([e|E][t|T][h|H][o|O][d|D][s|S|\s])"
+        keytext = r"^M([ethods|aterials])"
+
     if re.search(keytext,data):
         return True
 
@@ -83,7 +84,7 @@ def getPartialData(filepath,keyinput):
         partialData = summarize(partialData, ratio=0.3)
     return partialData
 
-def getAllFiles(inputpath,keyinput): 
+def getAllFilesToText(inputpath,keyinput): 
     fileObj = open(keyinput+".txt", "wb")
     emptyFileList = []
     for filename in os.listdir(inputpath):
@@ -102,10 +103,12 @@ def getAllFiles(inputpath,keyinput):
     utility.printLog("Moving the Output to Processed Folder")
     shutil.move(keyinput+".txt","data/processed/"+keyinput+".txt")
 
+def getAllFilesToPdf(path,keyinput):
+    fileObj = open(keyinput+".txt", "wb")
 
 def perfomPartAnalysis(path,keyinput):
     utility.printLog('Performing Partial Analysis : '+keyinput)
-    getAllFiles(path,keyinput)
+    getAllFilesToText(path,keyinput)
 
 
 

@@ -18,8 +18,8 @@ def extract_information(pdf_path):
     """
 
     print(txt)
-    return information
+    print information.title
 
 if __name__ == '__main__':
-    path = '/home/hussain/sample_pdf/hichri.pdf'
+    path = '/home/hussain/ML/project/nlp_project/data/raw/hichri.pdf'
     extract_information(path)

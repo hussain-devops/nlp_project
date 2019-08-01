@@ -30,6 +30,6 @@ class PartialAnalysis():
             PartAnalysis.perfomPartAnalysis(vars.raw_folder,'results')
         elif self.input2 == 'h':
             print ('Entered Input '+ self.input2)
-            print helpInfo.help2
+            print helpInfo.menu2
         else:
             print ('Please Enter Choice within the range')
