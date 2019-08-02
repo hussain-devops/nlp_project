@@ -17,7 +17,6 @@ def main():
     utility.patternDraw("Welcome To NLP based Curation Framework")
     utility.initialIOCheck()
     mainMenu(userdict)
-    sendmail(userdict,sendEmail)
 
 def mainMenu(userdict):
     # List the Menu 
@@ -44,7 +43,6 @@ def mainMenu(userdict):
 
 def sendmail(userdict,analysis_type):
     send_mail.send_Email(analysis_type,userdict['userName'],userdict['userEmail'])
-
 
 if __name__ == "__main__":
     main()

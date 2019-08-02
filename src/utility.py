@@ -40,3 +40,8 @@ def patternDraw(msg):
         print '| %-*.*s |' % (maxlen, maxlen, s)
     print '+' + '-'*colwidth + '+'
     print "\n"
+
+def getFileName(path):
+    for file in os.listdir(path):
+        if file.endswith(".txt"):
+            return path+file

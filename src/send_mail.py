@@ -3,7 +3,7 @@
 #
 ########################################################
 
-import smtplib,ssl,base64
+import smtplib,ssl,base64,os
 from src.vars import global_vars as vars
 from src import utility
 from src.project_utility import yaspin_demo as yd
@@ -11,18 +11,19 @@ from src.project_utility import yaspin_demo as yd
 def send_Email(analysis_type,name,email):
     smtp_server = "smtp.gmail.com"
     port = 587  # For starttls
-    sender_email = "nlpproject01@gmail.com"
+    sender_email = os.environ['nlp_sender_email']
     receiver_email = email
 
 
-    filename = vars.processed_folder+"results1.txt"
+    # filename = vars.processed_folder+"results1.txt"
+    filename = utility.getFileName(vars.processed_folder)
     marker = "AUNIQUEMARKER"
 
     fo = open(filename, "rb")
     filecontent = fo.read()
     encodedcontent = base64.b64encode(filecontent)  # base64
 
-    password = base64.b64decode("TkxQQFBhc3Npb25AMTI=")
+    password = base64.b64decode(os.environ['nlp_sender_email_password'])
 
     body ="""
 <h2>Hi """+name+""",</h2>
