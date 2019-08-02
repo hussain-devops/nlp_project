@@ -1,7 +1,7 @@
 import re,utility
 
 def getInput(attr): 
-        choice = raw_input('\tEnter your '+attr+': ')
+        choice = raw_input('Enter your '+attr+': ')
         return choice
 
 def validateEmail(email):

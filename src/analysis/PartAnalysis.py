@@ -103,8 +103,8 @@ def getAllFilesToText(inputpath,keyinput):
     utility.printLog("Moving the Output to Processed Folder")
     shutil.move(keyinput+".txt","data/processed/"+keyinput+".txt")
 
-def getAllFilesToPdf(path,keyinput):
-    fileObj = open(keyinput+".txt", "wb")
+# def getAllFilesToPdf(path,keyinput):
+#     fileObj = open(keyinput+".txt", "wb")
 
 def perfomPartAnalysis(path,keyinput):
     utility.printLog('Performing Partial Analysis : '+keyinput)

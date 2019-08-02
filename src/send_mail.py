@@ -3,7 +3,7 @@ from src.vars import global_vars as vars
 from src import utility
 from src.project_utility import yaspin_demo as yd
 
-def sendEmail(analysis_type,name,email):
+def send_Email(analysis_type,name,email):
     smtp_server = "smtp.gmail.com"
     port = 587  # For starttls
     sender_email = "nlpproject01@gmail.com"
@@ -60,9 +60,9 @@ Content-Disposition: attachment; filename=%s
         s.login(sender_email, pass2) 
         s.sendmail(sender_email, receiver_email, message)
         yd.any_spinner_you_like("Please wait until the mail is being sent !!!")
-        utility.printLog("Mail has been sent!!!")
+        utility.printLog("Mail has been successfully sent!!!")
         s.quit()
-        utility.printLog("Session has been terminated")
+        # utility.printLog("Session has been terminated")
     except:
         utility.printError("Unable to send the mail")
 

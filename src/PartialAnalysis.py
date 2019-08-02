@@ -5,31 +5,39 @@ from src.vars import global_vars as vars
 
 menu = Menu()
 
-class PartialAnalysis():
-    input2=''
-    def getInput(self):
-        print ('You are inside Partial Analysis class')
-        menu.ShowPartialAnalysis()
-        self.input2 = menu.getInput()
-        return self.input2
+input2=''
+def getInput():
+    print ('You are inside Partial Analysis class')
+    menu.ShowPartialAnalysis()
+    input2 = menu.getInput()
+    keyword = validateInput(input2)
+    return keyword
 
-    def validateInput(self,input2):
-        path = vars.raw_folder + 'iPSC_OCRL_MolAut.pdf' # needs to be modified by taking out the pdf file
-        if self.input2 == 'q':
-            utility.printError('Exit From Frame Work')
-            exit()
-        elif self.input2 == '1': 
+def validateInput(input2):
+        # path = vars.raw_folder + 'iPSC_OCRL_MolAut.pdf' # needs to be modified by taking out the pdf file
+    if input2 == 'q':
+        utility.printError('Exit From Frame Work')
+        exit()
+    elif input2 == '1': 
             # print ('Entered Input '+ self.input2)
-            utility.printLog(self.input2)
-            PartAnalysis.perfomPartAnalysis(vars.raw_folder,'abstract')
-        elif self.input2 == '2':
-            PartAnalysis.perfomPartAnalysis(vars.raw_folder,'methods')
-        elif self.input2 == '3':
-            PartAnalysis.perfomPartAnalysis(vars.raw_folder,'conclusions')
-        elif self.input2 == '4':
-            PartAnalysis.perfomPartAnalysis(vars.raw_folder,'results')
-        elif self.input2 == 'h':
-            print ('Entered Input '+ self.input2)
-            print helpInfo.menu2
-        else:
-            print ('Please Enter Choice within the range')
+        keyword = 'abstract'
+        PartAnalysis.perfomPartAnalysis(vars.raw_folder,'abstract')
+        return keyword
+    elif input2 == '2':
+        keyword = 'methods'
+        PartAnalysis.perfomPartAnalysis(vars.raw_folder,'methods')
+        return keyword
+    elif input2 == '3':
+        keyword = 'conclusions'
+        PartAnalysis.perfomPartAnalysis(vars.raw_folder,'conclusions')
+        return keyword
+    elif input2 == '4':
+        keyword = 'results'
+        PartAnalysis.perfomPartAnalysis(vars.raw_folder,'results')
+        return keyword
+    elif input2 == 'h':
+        print helpInfo.menu2
+        getInput()
+    else:
+        print ('Please Enter Choice within the range')
+        getInput()
