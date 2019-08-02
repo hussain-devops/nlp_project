@@ -1,34 +1,8 @@
 import os,subprocess,re,nltk,shutil,textstat,textract
 from textwrap import wrap
 from gensim.summarization import summarize
-from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
-from pdfminer.converter import TextConverter
-from pdfminer.layout import LAParams
-from pdfminer.pdfpage import PDFPage
 from io import BytesIO
 from src import utility
-
-# hichri
-# iPSC_OCRL_MolAut
-# splicing_analysis_genes-09-00015
-
-# path = '/home/hussain/ML/project/nlp_project/data/raw/iPSC_OCRL_MolAut.pdf'
-# outputpath = '/home/hussain/ML/project/nlp_project/data/result.txt'
-
-def pdf_to_text(path):
-    manager = PDFResourceManager()
-    retstr = BytesIO()
-    layout = LAParams(all_texts=True)
-    device = TextConverter(manager, retstr, laparams=layout)
-    filepath = open(path, 'rb')
-    interpreter = PDFPageInterpreter(manager, device)
-    for page in PDFPage.get_pages(filepath, check_extractable=True):
-        interpreter.process_page(page)
-    text = retstr.getvalue()
-    filepath.close()
-    device.close()
-    retstr.close()
-    return text
 
 def pdf_textract(filepath):
     text = textract.process(filepath)
@@ -103,16 +77,6 @@ def getAllFilesToText(inputpath,keyinput):
     utility.printLog("Moving the Output to Processed Folder")
     shutil.move(keyinput+".txt","data/processed/"+keyinput+".txt")
 
-# def getAllFilesToPdf(path,keyinput):
-#     fileObj = open(keyinput+".txt", "wb")
-
 def perfomPartAnalysis(path,keyinput):
     utility.printLog('Performing Partial Analysis : '+keyinput)
     getAllFilesToText(path,keyinput)
-
-
-
-# path = '/home/hussain/ML/project/nlp_project/data/raw/CD009645.pdf'
-
-# data =getPartialData(path,'analysis')
-# print data 

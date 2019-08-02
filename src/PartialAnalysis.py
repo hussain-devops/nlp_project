@@ -14,12 +14,10 @@ def getInput():
     return keyword
 
 def validateInput(input2):
-        # path = vars.raw_folder + 'iPSC_OCRL_MolAut.pdf' # needs to be modified by taking out the pdf file
     if input2 == 'q':
         utility.printError('Exit From Frame Work')
         exit()
     elif input2 == '1': 
-            # print ('Entered Input '+ self.input2)
         keyword = 'abstract'
         PartAnalysis.perfomPartAnalysis(vars.raw_folder,'abstract')
         return keyword

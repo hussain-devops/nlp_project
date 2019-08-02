@@ -1,3 +1,8 @@
+#########################################################
+# This file has the function to send email
+#
+########################################################
+
 import smtplib,ssl,base64
 from src.vars import global_vars as vars
 from src import utility
@@ -8,7 +13,6 @@ def send_Email(analysis_type,name,email):
     port = 587  # For starttls
     sender_email = "nlpproject01@gmail.com"
     receiver_email = email
-    # password = raw_input("Type your password and press enter: ")
 
 
     filename = vars.processed_folder+"results1.txt"
@@ -18,9 +22,7 @@ def send_Email(analysis_type,name,email):
     filecontent = fo.read()
     encodedcontent = base64.b64encode(filecontent)  # base64
 
-    # pass1 = base64.b64encode(password)
-    # print pass1
-    pass2 = base64.b64decode("TkxQQFBhc3Npb25AMTI=")
+    password = base64.b64decode("TkxQQFBhc3Npb25AMTI=")
 
     body ="""
 <h2>Hi """+name+""",</h2>
@@ -54,15 +56,13 @@ Content-Disposition: attachment; filename=%s
 
     try:
         utility.printLog("Sending Mail To "+ receiver_email)
-        # yd.any_spinner_you_like()
         s = smtplib.SMTP(smtp_server,port) 
         s.starttls()
-        s.login(sender_email, pass2) 
+        s.login(sender_email, password) 
         s.sendmail(sender_email, receiver_email, message)
         yd.any_spinner_you_like("Please wait until the mail is being sent !!!")
         utility.printLog("Mail has been successfully sent!!!")
         s.quit()
-        # utility.printLog("Session has been terminated")
     except:
         utility.printError("Unable to send the mail")
 

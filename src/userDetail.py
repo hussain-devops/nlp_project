@@ -19,6 +19,3 @@ def getUserDetail():
     else:
         utility.printError("Please enter valid user data!!!")
         exit()
-
-
-# getUserDetail()

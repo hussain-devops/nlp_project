@@ -39,23 +39,4 @@ def patternDraw(msg):
     for s in text:
         print '| %-*.*s |' % (maxlen, maxlen, s)
     print '+' + '-'*colwidth + '+'
-
-
-
-
-# def userDetail():
-#     dict = {}
-#     username = getInput('EnterYour Name: ')
-#     dict['userName'] = username
-#     useremail = getInput('Enter Your Email: ')
-#     dict['userEmail'] = useremail
-#     print dict
-
-
-# printError('testing')
-
-# logging.debug('This is a debug message')
-# logging.info('This is an info message')
-# logging.warning('This is a warning message')
-# logging.error('This is an error message')
-# logging.critical('This is a critical message')
+    print "\n"

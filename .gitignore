@@ -9,3 +9,4 @@
 *.txt
 *.pdf
 data/processed/*
+project_*
