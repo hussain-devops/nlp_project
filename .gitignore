@@ -1,0 +1,12 @@
+#Python
+*.pyc
+
+#IDE
+*.idea
+*.vscode
+
+#Development
+*.txt
+*.pdf
+data/processed/*
+project_*
