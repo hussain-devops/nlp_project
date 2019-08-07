@@ -30,7 +30,8 @@ def mainMenu(userdict):
     elif input1 == '1':
         fullanalys = FullAnalysis()
         analysis_type = 'full_analysis'
-        sendmail(userdict,analysis_type)
+        fullanalys.performFullAnalysis(analysis_type)
+        # sendmail(userdict,analysis_type)
     elif input1 == '2':
         analysis_type = PartialAnalysis.getInput()
         sendmail(userdict,analysis_type)

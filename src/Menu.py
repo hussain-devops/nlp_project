@@ -22,7 +22,7 @@ class Menu():
         print ('===========================================================')
         print('\t ***** Performing Full Analysis on the Raw Data *****')
         utility.printLog (' Total Number of Files    :' + self.input_count)
-        utility.printLog (' Estimated Time Duration  :')
+        # utility.printLog (' Estimated Time Duration  :')
 
     def ShowPartialAnalysis(self):
         print ('\n')
