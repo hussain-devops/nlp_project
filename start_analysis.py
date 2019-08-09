@@ -34,7 +34,7 @@ def mainMenu(userdict):
         # sendmail(userdict,analysis_type)
     elif input1 == '2':
         analysis_type = PartialAnalysis.getInput()
-        sendmail(userdict,analysis_type)
+        # sendmail(userdict,analysis_type)
     elif input1 == 'h':
         utility.printInfo(helpInfo.menu1)
         mainMenu(userdict)

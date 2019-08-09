@@ -1,1 +1,12 @@
 para = ['ABSTRACT',"Conclusions","Materials","syndrome","disease","disorder","behavioral","impairment","results","mutations"]
+
+
+en_stops = set(stopwords.words('english'))
+dmFile = '/home/hussain/ML/project/nlp_project/model/datamodel.csv'
+raw_data = open(dmFile, 'rt')
+reader = csv.reader(raw_data, delimiter=',')
+# reader = numpy.loadtxt(raw_data, delimiter=",")
+x = list(reader)
+
+for row in x:
+    mylist = row
