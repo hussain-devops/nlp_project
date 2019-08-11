@@ -31,10 +31,10 @@ def mainMenu(userdict):
         fullanalys = FullAnalysis()
         analysis_type = 'full_analysis'
         fullanalys.performFullAnalysis(analysis_type)
-        # sendmail(userdict,analysis_type)
+        sendmail(userdict,analysis_type)
     elif input1 == '2':
         analysis_type = PartialAnalysis.getInput()
-        # sendmail(userdict,analysis_type)
+        sendmail(userdict,analysis_type)
     elif input1 == 'h':
         utility.printInfo(helpInfo.menu1)
         mainMenu(userdict)
