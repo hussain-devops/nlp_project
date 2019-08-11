@@ -1,7 +1,7 @@
 import re,utility
 
 def getInput(attr): 
-        choice = raw_input('Enter your '+attr+': ')
+        choice = raw_input(attr)
         return choice
 
 def validateEmail(email):
@@ -10,11 +10,13 @@ def validateEmail(email):
 
 def getUserDetail():
     dict={}
-    username = getInput('Name')
-    useremail = getInput('Email')
-    if validateEmail(useremail) and username != '':
+    username = getInput('Enter your Name : ')
+    useremail = getInput('Enter your Email : ')
+    email_option = getInput('Do you want the output in email? (Y/N) : ')
+    if validateEmail(useremail) and username != '' and re.match(r'(Y|N)',email_option):
         dict['userName'] = username 
         dict['userEmail'] = useremail
+        dict['email_option'] = email_option
         return dict
     else:
         utility.printError("Please enter valid user data!!!")

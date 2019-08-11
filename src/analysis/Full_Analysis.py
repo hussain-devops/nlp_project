@@ -1,11 +1,10 @@
-# from src import utility,FileInfo
-# from src.vars import global_vars as vars
-# from src.analysis import PartAnalysis as pa
+from src import utility,FileInfo
+from src.vars import global_vars as vars
+from src.analysis import PartAnalysis as pa
 import pandas as pd
-import tabula,nltk,re,csv
+import nltk,re
 import textract,parawrap,os,shutil
 from textwrap3 import wrap
-from flashtext import KeywordProcessor
 from gensim.summarization.summarizer import summarize
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
@@ -17,7 +16,6 @@ en_stops = set(stopwords.words('english'))
 
 def pdf_textract(filepath):
     text = textract.process(filepath)
-    # print summarize(text)
     return text
 
 def linesFormat(filepath):
@@ -56,23 +54,28 @@ def individualAnalysis(filepath):
 
 def getAllFilesToText(inputpath,keyinput):
     fileObj = open(keyinput+".txt", "wb")
-    emptyFileList = []
+    file_status = []
     for filename in os.listdir(inputpath):
         filepath = ''
         if filename.endswith(".pdf"):
             filepath = inputpath + filename
             partialData = individualAnalysis(filepath)
+            file_dict = {'name': filename,'status':'SUCCESS'}
             if partialData == '':
-                emptyFileList.append(filename)
+                file_dict['status'] = 'FAILURE'
+                file_status.append(file_dict)
                 continue
+            file_status.append(file_dict)
             fileObj.write("File Name : \t"+filename+"\n")
             fileObj.write("-----------------------------------------------------------\n")
             fileObj.write(partialData+"\n")
             fileObj.write("-----------------------------------------------------------\n")
-    utility.printLog("Empty File LIST " + str(emptyFileList))
+    utility.printLog("Empty File LIST " + str(file_status))
     utility.printLog("Moving the Output to Processed Folder")
     shutil.move(keyinput+".txt","data/processed/"+keyinput+".txt")
+    return file_status
 
 def performFullAnalysis(path,keyinput):
     utility.printLog('Performing Partial Analysis : '+keyinput)
-    getAllFilesToText(path,keyinput)
+    file_status = getAllFilesToText(path,keyinput)
+    return file_status
