@@ -8,22 +8,12 @@ from src.vars import global_vars as vars
 from src import utility
 from src.project_utility import yaspin_demo as yd
 
-def generate_table_data(status):
-    table_row =''
-    for i in status:
-        status_style = '' 
-        if i['status']=='FAILURE':
-            status_style = "background:red"
-        table_row = table_row + """<tr> <td>"""+i['name']+"""</td><td style="""+status_style+""">"""+i['status']+"""</td></tr>"""
-    return table_row
-
-def send_Email(analysis_type,name,email,status):
+def send_Email(analysis_type,name,email):
     smtp_server = "smtp.gmail.com"
     port = 587  # For starttls
     sender_email = os.environ['nlp_sender_email']
     receiver_email = email
-    execution_status=generate_table_data(status)
-    # print status['file_status]
+
 
     # filename = vars.processed_folder+"results1.txt"
     filename = utility.getFileName(vars.processed_folder)
@@ -36,24 +26,8 @@ def send_Email(analysis_type,name,email,status):
     password = base64.b64decode(os.environ['nlp_sender_email_password'])
 
     body ="""
-    <head>
-      <style>
-         table, th, td {
-            border: 1px solid black;
-         }
-      </style>
-   </head>
 <h2>Hi """+name+""",</h2>
 <h3 style="border:2px solid DodgerBlue;">Thanks for using <i>NLP Framework for Curation of Scientific Literature</i><h3><br>
-
-<br>
-<table border="0">
-<tr>
-<th> File Name</th>
-<th>Status</th>
-</tr>
-"""+execution_status+"""
-</table>
 <p>Please find the attachments of the analysis</p>
     """
 

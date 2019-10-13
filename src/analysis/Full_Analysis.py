@@ -1,25 +1,52 @@
-from src import utility,FileInfo
-from src.vars import global_vars as vars
-from src.analysis import PartAnalysis as pa
+# from src import utility,FileInfo
+# from src.vars import global_vars as vars
+# from src.analysis import PartAnalysis as pa
 import pandas as pd
-import nltk,re
-import textract,parawrap,os,shutil
+import tabula,nltk,re
+import textract,parawrap
 from textwrap3 import wrap
-from gensim.summarization.summarizer import summarize
+from flashtext import KeywordProcessor
+import gensim.summarization as summarize
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
-from src import utility
-
-nltk.download('stopwords')
 
 en_stops = set(stopwords.words('english'))
 
+# nltk.download('stopwords')
+
+# hichri
+# iPSC_OCRL_MolAut
+# splicing_analysis_genes-09-00015
+
+# processor = KeywordProcessor()
+path = '/home/hussain/ML/project/nlp_project/data/raw/hichri.pdf'
+# list = FileInfo.extractPdfMeta(path)
+
 def pdf_textract(filepath):
     text = textract.process(filepath)
+    # print summarize(text)
     return text
 
-def linesFormat(filepath):
-    lines = pdf_textract(filepath).split("\n")
+# def textProcessor(filepath):
+#     num_words = 0
+#     text = pdf_textract(path).strip()
+
+#     # processor.add_keyword('Dent')
+#     # found = processor.extract_keywords(text)
+#     # for line in text:
+#     #     words = line.split()
+#     #     num_words += len(words)
+#     # print num_words
+#     # print parawrap.wrap(text)
+#     # df = tabula.read_pdf(path, pages = '4', multiple_tables = True)
+#     # print(df)
+#     return text
+
+
+# textProcessor(path)
+
+def linesFormat():
+    lines = pdf_textract(path).split("\n")
     index = 0
     output = ''
     # write = true
@@ -37,45 +64,55 @@ def linesFormat(filepath):
             output = output +"\n"+ line
     return output
 
-def individualAnalysis(filepath):
-    paras = linesFormat(filepath).split(".")
-    keywords = ["ABSTRACT","Conclusions","Materials","syndrome","disease","disorder","behavioral","impairment","results","mutations","symptoms","patient","sibling","predicted","termination","detected","analytics","spectrum","neurons","spine"]
-    result = ''
+
+def paraFormat():
+    paras = ''
+    para = ''
+    lines = linesFormat().split("\n")
+    for line in lines:
+        if line != '' and len(line.split()) > 3:
+            para = 'start'
+        elif line == '':
+            para = 'end'
+        
+        if para == 'start':
+            paras = paras + "\n" + line
+        elif para == 'end':
+            paras = paras + "\n"
+    return paras
+
+
+def individualPara():
+    paras = linesFormat().split("\n")
+    para = ['ABSTRACT',"Conclusions","Materials"]
+    data = 'abstract'
+    # fo = open("test.txt", "wb")
+    # fo.write(paras)
+    # fo.close()
+    # fo = open("test.txt", "rb")
+    # lines = fo.readlines()
     for line in paras:
-        upline = re.sub("\n"," ",line)
-        line = ''
-        words = upline.split()
-        for word in words:
-            if word not in en_stops or word in keywords:
-                line = line +" "+ word
-        result = result +"\n"+ line
-    return summarize(result)
+        words = line.split(" ")
+        for word in words: 
+            if word not in en_stops:
+                para = para + " "+word
+                line = line + " " +  word
+            # print line
+        # if re.match("ABSTRACT",line):
+        #     # x = re.split(r"ABSTRACT",line)
+        #     # print x
 
 
-def getAllFilesToText(inputpath,keyinput):
-    fileObj = open(keyinput+".txt", "wb")
-    file_status = []
-    for filename in os.listdir(inputpath):
-        filepath = ''
-        if filename.endswith(".pdf"):
-            filepath = inputpath + filename
-            partialData = individualAnalysis(filepath)
-            file_dict = {'name': filename,'status':'SUCCESS'}
-            if partialData == '':
-                file_dict['status'] = 'FAILURE'
-                file_status.append(file_dict)
-                continue
-            file_status.append(file_dict)
-            fileObj.write("File Name : \t"+filename+"\n")
-            fileObj.write("-----------------------------------------------------------\n")
-            fileObj.write(partialData+"\n")
-            fileObj.write("-----------------------------------------------------------\n")
-    utility.printLog("Empty File LIST " + str(file_status))
-    utility.printLog("Moving the Output to Processed Folder")
-    shutil.move(keyinput+".txt","data/processed/"+keyinput+".txt")
-    return file_status
+        # result = summarize(line)
+        # print words
+    # for para in paras:
+    #     if (para == ""):
+    #         print "Para"
+    # #     print para
+    # fo.close()
+    # os.remove("test.txt")
+    # print para
 
-def performFullAnalysis(path,keyinput):
-    utility.printLog('Performing Partial Analysis : '+keyinput)
-    file_status = getAllFilesToText(path,keyinput)
-    return file_status
+
+# linesFormat()
+# individualPara()
