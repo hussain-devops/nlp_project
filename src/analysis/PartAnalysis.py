@@ -1,25 +1,26 @@
 import os,subprocess,re,nltk,shutil,textstat,textract
-from textwrap import wrap
 from gensim.summarization import summarize
-from io import BytesIO
 from src import utility
+
 
 def pdf_textract(filepath):
     text = textract.process(filepath)
+    re.sub(r'[^\x00-\x7F]+',' ', text)
+    # text = str.replace("!@#$%^&*()[]{};:,./<>?\|`~-=_+", " ")
     return text
 
 def patternCheck(keytext,data):
     if keytext == 'abstract':
-        keytext = r"^A([b|B][s|S][t|T][r|R][a|A][c|C][t|T])"
+        keytext = r"^\d*\.*\s*(Abstract|A B S T R A C T|ABSTRACT|Purpose|PURPOSE|A([b|B|\s][s|S|B][t|T|\s][a-zA-Z\s]*))"
 
     if keytext == 'results':
-        keytext = r"^R([e|E|\s][s|S|\s][u|U|\s][l|L|\s][t|T|\s][s|S|\s])"
+        keytext = r"^\d*\.*\s*R([e|E|\s][s|S|\s][u|U|\s][l|L|\s][t|T|\s][s|S|\s])"
 
     if keytext == 'conclusions':
-        keytext = r"^C([o|O][n|N|\s][c|C|\s][l|L|\s][u|U|\s][s|S|\s][i|I|\s][o|O|\s][n|N|\s][s|S|\s])"
+        keytext = r"^\d*\.*\s*C([o|O][n|N|\s][c|C|\s][l|L|\s][u|U|\s][s|S|\s][i|I|\s][o|O|\s][n|N|\s][s|S|\s])"
 
     if keytext == 'methods':
-        keytext = r"^M([ethods|aterials])"
+        keytext = r"^\d*\.*\s*M([ethods|aterials])"
 
     if re.search(keytext,data):
         return True
@@ -35,6 +36,7 @@ def cutPara(data,feature):
     index = 0
     # Extract para from Keyword to empty line
     for line in lines:
+        # line = re.sub(r'^[\x00-\x7F\|]+',' ', line)
         if patternCheck(feature,line):
             extract = 'true'
             if lines[index+1] == '\n':
@@ -60,23 +62,33 @@ def getPartialData(filepath,keyinput):
 
 def getAllFilesToText(inputpath,keyinput): 
     fileObj = open(keyinput+".txt", "wb")
-    emptyFileList = []
+    file_status = []
     for filename in os.listdir(inputpath):
         filepath = ''
         if filename.endswith(".pdf"):
             filepath = inputpath + filename
             partialData = getPartialData(filepath,keyinput)
+            file_dict = {'name': filename,'status':'SUCCESS'}
             if partialData == '':
-                emptyFileList.append(filename)
+                file_dict['status'] = 'FAILURE'
+                file_status.append(file_dict)
                 continue
+            file_status.append(file_dict)
             fileObj.write("File Name : \t"+filename+"\n")
             fileObj.write("-----------------------------------------------------------\n")
             fileObj.write(partialData+"\n")
             fileObj.write("-----------------------------------------------------------\n")
-    utility.printLog("Empty File LIST " + str(emptyFileList))
+    utility.printLog("Empty File LIST " + str(file_status))
     utility.printLog("Moving the Output to Processed Folder")
     shutil.move(keyinput+".txt","data/processed/"+keyinput+".txt")
+    return file_status
 
 def perfomPartAnalysis(path,keyinput):
     utility.printLog('Performing Partial Analysis : '+keyinput)
-    getAllFilesToText(path,keyinput)
+    file_status = getAllFilesToText(path,keyinput)
+    return file_status
+
+
+# path = '/home/hussain/ML/project/nlp_project/data/raw/'
+# # data = pdf_textract(path)
+# getAllFilesToText(path,'abstract')

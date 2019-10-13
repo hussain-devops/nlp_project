@@ -3,7 +3,7 @@ from src.vars import global_vars as vars
 from src.nlp import pdf_data as pdata
 from src import utility
 
-input_count = '3'
+input_count = ''
 
 class Menu():
     def __init__(self):
@@ -20,9 +20,9 @@ class Menu():
 
     def ShowFullAnalysis(self):
         print ('===========================================================')
-        print('\t ***** Performing Full Analysis on the Raw Data *****')
-        utility.printLog (' Total Number of Files    :' + self.input_count)
-        utility.printLog (' Estimated Time Duration  :')
+        print('\t ***** Performing Full Analysis on the Raw Data *****\n')
+        utility.printLog (' Total Number of Files    : ' + self.input_count)
+        # utility.printLog (' Estimated Time Duration  :')
 
     def ShowPartialAnalysis(self):
         print ('\n')
