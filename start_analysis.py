@@ -8,7 +8,7 @@ analysis_type = ''
 menu = Menu()
 
 def main():
-    # Start of Execution
+
     os.system('clear')
     utility.patternDraw("Please Enter Your Details !!!")
     userdict = userDetail.getUserDetail()
@@ -28,15 +28,12 @@ def mainMenu(userdict):
         utility.printError('Exit From Frame Work')
         exit()
     elif input1 == '1':
-        analysis_type = {}
         fullanalys = FullAnalysis()
-        analysis_type = fullanalys.performFullAnalysis()
-        if(userdict['email_option'] == 'Y'):
-            sendmail(userdict,analysis_type)
+        analysis_type = 'full_analysis'
+        sendmail(userdict,analysis_type)
     elif input1 == '2':
         analysis_type = PartialAnalysis.getInput()
-        if(userdict['email_option'] == 'Y'):
-            sendmail(userdict,analysis_type)
+        sendmail(userdict,analysis_type)
     elif input1 == 'h':
         utility.printInfo(helpInfo.menu1)
         mainMenu(userdict)
@@ -45,7 +42,7 @@ def mainMenu(userdict):
         mainMenu(userdict)
 
 def sendmail(userdict,analysis_type):
-    send_mail.send_Email(analysis_type['keyword'],userdict['userName'],userdict['userEmail'],analysis_type['file_status'])
+    send_mail.send_Email(analysis_type,userdict['userName'],userdict['userEmail'])
 
 if __name__ == "__main__":
     main()

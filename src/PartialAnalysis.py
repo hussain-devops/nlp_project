@@ -4,7 +4,7 @@ from src.analysis import PartAnalysis
 from src.vars import global_vars as vars
 
 menu = Menu()
-status ={}
+
 input2=''
 def getInput():
     print ('You are inside Partial Analysis class')
@@ -18,21 +18,21 @@ def validateInput(input2):
         utility.printError('Exit From Frame Work')
         exit()
     elif input2 == '1': 
-        status['keyword'] = 'abstract'
-        status['file_status'] = PartAnalysis.perfomPartAnalysis(vars.raw_folder,'abstract')
-        return status
+        keyword = 'abstract'
+        PartAnalysis.perfomPartAnalysis(vars.raw_folder,'abstract')
+        return keyword
     elif input2 == '2':
-        status['keyword'] = 'methods'
-        status['file_status'] = PartAnalysis.perfomPartAnalysis(vars.raw_folder,'methods')
-        return status
+        keyword = 'methods'
+        PartAnalysis.perfomPartAnalysis(vars.raw_folder,'methods')
+        return keyword
     elif input2 == '3':
-        status['keyword'] = 'conclusions'
-        status['file_status'] = PartAnalysis.perfomPartAnalysis(vars.raw_folder,'conclusions')
-        return status
+        keyword = 'conclusions'
+        PartAnalysis.perfomPartAnalysis(vars.raw_folder,'conclusions')
+        return keyword
     elif input2 == '4':
-        status['keyword'] = 'results'
-        status['file_status'] = PartAnalysis.perfomPartAnalysis(vars.raw_folder,'results')
-        return status
+        keyword = 'results'
+        PartAnalysis.perfomPartAnalysis(vars.raw_folder,'results')
+        return keyword
     elif input2 == 'h':
         print helpInfo.menu2
         getInput()
